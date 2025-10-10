@@ -1,0 +1,20 @@
+# Gunakan image Go
+FROM golang:1.22
+
+# Set working directory di dalam container
+WORKDIR /app
+
+# Copy semua file backend ke container
+COPY backend/ .
+
+# Download dependencies
+RUN go mod download
+
+# Build binary dari cmd/main.go
+RUN go build -o main ./cmd
+
+# Jalankan binary
+CMD ["./main"]
+
+# Expose port default
+EXPOSE 8080
