@@ -23,6 +23,8 @@ func main() {
 	database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{})
 
 	app := fiber.New()
+
+	// Pasang logging middleware di sini
 	app.Use(handlers.LoggingMiddleware())
 
 	app.Use(cors.New(cors.Config{
@@ -52,5 +54,6 @@ func main() {
 	}
 
 	log.Printf("🚀 Server running on port %s", port)
-	log.Fatal(app.Listen(":" + port))
+	log.Fatal(app.Listen(":" + port)) // Fiber sendiri yang handle listen
 }
+
