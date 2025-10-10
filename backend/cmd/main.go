@@ -16,21 +16,19 @@ import (
 
 func main() {
 	if err := godotenv.Load(); err != nil {
-		log.Println("⚠️  No .env file found, using system environment")
+		log.Println("⚠️ No .env file found, using system environment")
 	}
 
 	database.ConnectDB()
-
-	// Auto migrate
 	database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{})
 
 	app := fiber.New()
 	app.Use(handlers.LoggingMiddleware())
 
-
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:3000",
+		AllowOrigins: os.Getenv("FRONTEND_URL"), // contoh: https://notes-app.vercel.app
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))
 
 	app.Get("/", func(c *fiber.Ctx) error {

@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -12,14 +11,21 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() {
-	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_PORT"),
-	)
+	var dsn string
+
+	// Railway biasanya pakai DATABASE_URL langsung
+	if os.Getenv("DATABASE_URL") != "" {
+		dsn = os.Getenv("DATABASE_URL")
+	} else {
+		// fallback untuk lokal
+		dsn = "host=" + os.Getenv("DB_HOST") +
+			" user=" + os.Getenv("DB_USER") +
+			" password=" + os.Getenv("DB_PASSWORD") +
+			" dbname=" + os.Getenv("DB_NAME") +
+			" port=" + os.Getenv("DB_PORT") +
+			" sslmode=disable"
+	}
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("❌ Failed to connect database: %v", err)
