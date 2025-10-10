@@ -4,8 +4,8 @@ FROM golang:1.22
 # Set working directory di dalam container
 WORKDIR /app
 
-# Copy semua file backend ke container
-COPY backend/ .
+# Copy semua file (karena sekarang root-nya sudah di backend)
+COPY . .
 
 # Download dependencies
 RUN go mod download
