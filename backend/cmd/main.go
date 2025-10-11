@@ -32,7 +32,7 @@ func main() {
 	// CORS configuration - Support multiple origins
 	allowedOrigins := os.Getenv("ALLOWED_ORIGINS")
 	if allowedOrigins == "" {
-		allowedOrigins = "http://localhost:3000,https://notes-production-8e61.up.railway.app"
+		allowedOrigins = "http://localhost:3000,https://notes-frontend-6ehcaceka-student-qanitas-projects.vercel.app"
 	}
 
 	app.Use(cors.New(cors.Config{
