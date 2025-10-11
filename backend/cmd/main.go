@@ -15,10 +15,12 @@ import (
 )
 
 func main() {
+	// Load environment variables
 	if err := godotenv.Load(); err != nil {
 		log.Println("⚠️ No .env file found, using system environment")
 	}
 
+	// Connect to database
 	database.ConnectDB()
 	database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{})
 
@@ -27,35 +29,36 @@ func main() {
 	// Logging middleware
 	app.Use(handlers.LoggingMiddleware())
 
-	// CORS
+	// CORS (izin frontend)
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:3000,https://notes-production.up.railway.app",
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))
 
-	// Middleware untuk proxy & https
-	app.EnableProxyForwarding()
+	// Middleware untuk proxy & HTTPS di Railway
 	app.Use(func(c *fiber.Ctx) error {
 		// Railway mengirim header X-Forwarded-Proto: https
 		if c.Get("X-Forwarded-Proto") == "https" {
 			c.Request().URI().SetScheme("https")
 		}
 		return c.Next()
+	})
 
-	// Fix: jangan redirect kalau sudah via proxy HTTPS
 	app.Use(func(c *fiber.Ctx) error {
+		// Jika datang via proxy HTTPS, lanjutkan saja
 		if c.Get("X-Forwarded-Proto") == "https" {
 			return c.Next()
 		}
-		// kalau datang dari HTTP langsung (misal akses langsung tanpa proxy)
+		// Jika datang lewat HTTP biasa, redirect ke HTTPS
 		if c.Protocol() == "http" {
 			return c.Redirect("https://"+c.Hostname()+c.OriginalURL(), fiber.StatusPermanentRedirect)
 		}
 		return c.Next()
 	})
 
-	// Routes
+
+	// Routes utama
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Notes Sharing API is running 🚀")
 	})
@@ -71,6 +74,7 @@ func main() {
 	notes.Patch("/:id", utils.JWTProtected(), handlers.UpdateNote)
 	notes.Delete("/:id", utils.JWTProtected(), handlers.DeleteNote)
 
+	// Tentukan port
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
