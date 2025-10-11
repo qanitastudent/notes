@@ -36,27 +36,24 @@ func main() {
 		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))
 
-	// Middleware untuk proxy & HTTPS di Railway
+	// Middleware untuk mendukung proxy Railway dan HTTPS
 	app.Use(func(c *fiber.Ctx) error {
-		// Railway mengirim header X-Forwarded-Proto: https
-		if c.Get("X-Forwarded-Proto") == "https" {
-			c.Request().URI().SetScheme("https")
-		}
-		return c.Next()
-	})
+		// Cek header dari Railway
+		proto := c.Get("X-Forwarded-Proto")
 
-	app.Use(func(c *fiber.Ctx) error {
-		// Jika datang via proxy HTTPS, lanjutkan saja
-		if c.Get("X-Forwarded-Proto") == "https" {
+		// Kalau datang lewat HTTPS (via proxy)
+		if proto == "https" {
+			c.Request().Header.Set("X-Forwarded-Proto", "https")
 			return c.Next()
 		}
-		// Jika datang lewat HTTP biasa, redirect ke HTTPS
+
+		// Kalau datang lewat HTTP biasa, redirect ke versi HTTPS
 		if c.Protocol() == "http" {
 			return c.Redirect("https://"+c.Hostname()+c.OriginalURL(), fiber.StatusPermanentRedirect)
 		}
+
 		return c.Next()
 	})
-
 
 	// Routes utama
 	app.Get("/", func(c *fiber.Ctx) error {
