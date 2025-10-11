@@ -30,18 +30,13 @@ func main() {
 	app.Use(handlers.LoggingMiddleware())
 
 	// ===== CORS Configuration =====
-	allowedOrigins := []string{
-		"http://localhost:3000",                                              // Local development
-		"https://notes-frontend-6ehcaceka-student-qanitas-projects.vercel.app", // Old Vercel frontend
-		"https://notes-frontend-five-black.vercel.app",                        // New Vercel frontend
-	}
-
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000,notes-frontend-6ehcaceka-student-qanitas-projects.vercel.app,https://notes-frontend-five-black.vercel.app",
+		AllowOrigins:     "http://localhost:3000,https://notes-frontend-6ehcaceka-student-qanitas-projects.vercel.app,https://notes-frontend-five-black.vercel.app",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET,POST,PATCH,DELETE,OPTIONS",
 		AllowCredentials: true,
 	}))
+
 
 
 	// Middleware untuk mendukung proxy Railway dan redirect HTTPS
