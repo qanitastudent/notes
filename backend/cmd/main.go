@@ -29,9 +29,14 @@ func main() {
 	// Logging middleware
 	app.Use(handlers.LoggingMiddleware())
 
-	// CORS (izin frontend) - PERBAIKI TRAILING SLASH
+	// CORS configuration - Support multiple origins
+	allowedOrigins := os.Getenv("ALLOWED_ORIGINS")
+	if allowedOrigins == "" {
+		allowedOrigins = "http://localhost:3000,https://notes-production-8e61.up.railway.app"
+	}
+
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000,https://notes-production-8e61.up.railway.app",
+		AllowOrigins:     allowedOrigins,
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET,POST,PATCH,DELETE,OPTIONS",
 		AllowCredentials: true,
@@ -82,7 +87,7 @@ func main() {
 	// Health check
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
-			"status": "ok",
+			"status":  "ok",
 			"message": "API is healthy",
 		})
 	})
