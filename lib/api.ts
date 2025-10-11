@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Ganti dengan URL Railway backend Anda
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+export const API_URL = 'https://notes-production-8e61.up.railway.app';
 console.log('🔍 API_URL:', API_URL); 
 
 const api = axios.create({
