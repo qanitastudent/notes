@@ -34,6 +34,15 @@ func main() {
 		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))
 
+	// Middleware untuk proxy & https
+	app.EnableProxyForwarding()
+	app.Use(func(c *fiber.Ctx) error {
+		// Railway mengirim header X-Forwarded-Proto: https
+		if c.Get("X-Forwarded-Proto") == "https" {
+			c.Request().URI().SetScheme("https")
+		}
+		return c.Next()
+
 	// Fix: jangan redirect kalau sudah via proxy HTTPS
 	app.Use(func(c *fiber.Ctx) error {
 		if c.Get("X-Forwarded-Proto") == "https" {
