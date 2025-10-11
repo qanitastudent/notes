@@ -28,10 +28,11 @@ func main() {
 	app.Use(handlers.LoggingMiddleware())
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: os.Getenv("FRONTEND_URL"), // contoh: https://notes-app.vercel.app
+		AllowOrigins: "http://localhost:3000,https://notes-production.up.railway.app",
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))
+
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Notes Sharing API is running 🚀")
