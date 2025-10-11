@@ -31,7 +31,7 @@ func main() {
 
 	// CORS (izin frontend)
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:3000,https://notes-production.up.railway.app",
+		AllowOrigins: "http://localhost:3000,https://notes-production-8e61.up.railway.app/",
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))

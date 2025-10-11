@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: notesdb
     ports:
-      - "5433:5432"    # ubah host port jadi 5433
+    - "5434:5432" # ubah host port jadi 5433
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./backend/migrations:/docker-entrypoint-initdb.d
