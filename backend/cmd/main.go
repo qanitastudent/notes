@@ -29,11 +29,12 @@ func main() {
 	// Logging middleware
 	app.Use(handlers.LoggingMiddleware())
 
-	// CORS (izin frontend)
+	// CORS (izin frontend) - PERBAIKI TRAILING SLASH
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:3000,https://notes-production-8e61.up.railway.app/",
-		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
-		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
+		AllowOrigins:     "http://localhost:3000,https://notes-production-8e61.up.railway.app",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowMethods:     "GET,POST,PATCH,DELETE,OPTIONS",
+		AllowCredentials: true,
 	}))
 
 	// Middleware untuk mendukung proxy Railway dan HTTPS
@@ -60,16 +61,31 @@ func main() {
 		return c.SendString("Notes Sharing API is running 🚀")
 	})
 
+	// Auth routes
 	auth := app.Group("/auth")
 	auth.Post("/register", handlers.Register)
 	auth.Post("/login", handlers.Login)
 
+	// Notes routes
 	notes := app.Group("/notes")
 	notes.Get("/", handlers.GetNotes)
 	notes.Get("/:id", handlers.GetNoteByID)
 	notes.Post("/", utils.JWTProtected(), handlers.CreateNote)
 	notes.Patch("/:id", utils.JWTProtected(), handlers.UpdateNote)
 	notes.Delete("/:id", utils.JWTProtected(), handlers.DeleteNote)
+
+	// Upload routes (NEW)
+	upload := app.Group("/upload")
+	upload.Post("/image", utils.JWTProtected(), handlers.UploadImage)
+	upload.Delete("/image", utils.JWTProtected(), handlers.DeleteImage)
+
+	// Health check
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"status": "ok",
+			"message": "API is healthy",
+		})
+	})
 
 	// Tentukan port
 	port := os.Getenv("PORT")

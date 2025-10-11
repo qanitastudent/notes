@@ -12,7 +12,7 @@ import (
 // Get all notes
 func GetNotes(c *fiber.Ctx) error {
 	var notes []models.Note
-	if err := database.DB.Find(&notes).Error; err != nil {
+	if err := database.DB.Order("created_at DESC").Find(&notes).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}
 	return c.JSON(notes)
@@ -35,21 +35,24 @@ func GetNoteByID(c *fiber.Ctx) error {
 // Create a note
 func CreateNote(c *fiber.Ctx) error {
 	var input struct {
-		Title   string `json:"title"`
-		Content string `json:"content"`
+		Title    string `json:"title"`
+		Content  string `json:"content"`
+		ImageURL string `json:"image_url"` // Tambahkan field ini
 	}
 	if err := c.BodyParser(&input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	user := c.Locals("user").(*models.User) // <- sudah tersedia dari middleware
+	user := c.Locals("user").(*models.User)
 
 	note := models.Note{
 		Title:     input.Title,
 		Content:   input.Content,
+		ImageURL:  input.ImageURL, // Set image URL
 		UserID:    user.ID,
 		Username:  user.Username,
 		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 
 	if err := database.DB.Create(&note).Error; err != nil {
@@ -77,8 +80,9 @@ func UpdateNote(c *fiber.Ctx) error {
 	}
 
 	var input struct {
-		Title   string `json:"title"`
-		Content string `json:"content"`
+		Title    string `json:"title"`
+		Content  string `json:"content"`
+		ImageURL string `json:"image_url"` // Tambahkan field ini
 	}
 	if err := c.BodyParser(&input); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
@@ -86,7 +90,8 @@ func UpdateNote(c *fiber.Ctx) error {
 
 	note.Title = input.Title
 	note.Content = input.Content
-	note.UpdatedAt = time.Now() // jika ada kolom UpdatedAt
+	note.ImageURL = input.ImageURL // Update image URL
+	note.UpdatedAt = time.Now()
 
 	if err := database.DB.Save(&note).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
@@ -94,7 +99,6 @@ func UpdateNote(c *fiber.Ctx) error {
 
 	return c.JSON(note)
 }
-
 
 // Delete note
 func DeleteNote(c *fiber.Ctx) error {
