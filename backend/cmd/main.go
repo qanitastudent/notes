@@ -37,19 +37,12 @@ func main() {
 	}
 
 	app.Use(cors.New(cors.Config{
-		// Allow only origins in the list
-		AllowOriginFunc: func(origin string) bool {
-			for _, o := range allowedOrigins {
-				if o == origin {
-					return true
-				}
-			}
-			return false
-		},
+		AllowOrigins:     "http://localhost:3000,notes-frontend-6ehcaceka-student-qanitas-projects.vercel.app,https://notes-frontend-five-black.vercel.app",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
 		AllowMethods:     "GET,POST,PATCH,DELETE,OPTIONS",
 		AllowCredentials: true,
 	}))
+
 
 	// Middleware untuk mendukung proxy Railway dan redirect HTTPS
 	app.Use(func(c *fiber.Ctx) error {
