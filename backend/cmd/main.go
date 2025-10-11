@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	// Load .env (tidak wajib di Railway)
+	// Load .env jika ada
 	if err := godotenv.Load(); err != nil {
 		log.Println("⚠️ No .env file found, using system environment")
 	}
@@ -24,13 +24,7 @@ func main() {
 	database.ConnectDB()
 	database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{})
 
-	// Konfigurasi Fiber
-	app := fiber.New(fiber.Config{
-		EnableTrustedProxyCheck: true,
-	})
-
-	// Izinkan Railway sebagai proxy terpercaya
-	app.SetTrustedProxies([]string{"0.0.0.0/0"})
+	app := fiber.New()
 
 	// Middleware Logging
 	app.Use(handlers.LoggingMiddleware())
@@ -42,7 +36,7 @@ func main() {
 		AllowMethods: "GET,POST,PATCH,DELETE,OPTIONS",
 	}))
 
-	// Middleware redirect HTTP → HTTPS (untuk Railway)
+	// Middleware redirect HTTP → HTTPS (bypass 426 Upgrade Required)
 	app.Use(func(c *fiber.Ctx) error {
 		if c.Protocol() == "http" {
 			return c.Redirect("https://"+c.Hostname()+c.OriginalURL(), fiber.StatusPermanentRedirect)
@@ -50,17 +44,17 @@ func main() {
 		return c.Next()
 	})
 
-	// Route utama (cek server)
+	// Route utama
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Notes Sharing API is running 🚀")
 	})
 
-	// Grup auth
+	// Auth routes
 	auth := app.Group("/auth")
 	auth.Post("/register", handlers.Register)
 	auth.Post("/login", handlers.Login)
 
-	// Grup notes
+	// Notes routes
 	notes := app.Group("/notes")
 	notes.Get("/", handlers.GetNotes)
 	notes.Get("/:id", handlers.GetNoteByID)
@@ -68,7 +62,7 @@ func main() {
 	notes.Patch("/:id", utils.JWTProtected(), handlers.UpdateNote)
 	notes.Delete("/:id", utils.JWTProtected(), handlers.DeleteNote)
 
-	// Port dari Railway atau default 8080
+	// Ambil port dari env
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
