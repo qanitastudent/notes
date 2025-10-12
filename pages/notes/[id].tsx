@@ -143,18 +143,24 @@ export default function NoteDetailPage() {
                 </div>
               </div>
 
-              {/* Actions */}
-              {isOwner && (
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={handleDelete}
-                    disabled={deleting}
-                    className="px-4 py-2 bg-red-50 text-red-700 rounded-lg font-medium hover:bg-red-100 transition disabled:opacity-50"
-                  >
-                    {deleting ? 'Deleting...' : 'Delete'}
-                  </button>
-                </div>
-              )}
+            {/* Actions */}
+            {isOwner && (
+            <div className="flex items-center space-x-2">
+                <button
+                onClick={() => router.push(`/notes/edit/${note.id}`)}
+                className="px-4 py-2 bg-primary-50 text-primary-700 rounded-lg font-medium hover:bg-primary-100 transition"
+                >
+                Edit
+                </button>
+                <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="px-4 py-2 bg-red-50 text-red-700 rounded-lg font-medium hover:bg-red-100 transition disabled:opacity-50"
+                >
+                {deleting ? 'Deleting...' : 'Delete'}
+                </button>
+            </div>
+            )}
             </div>
 
             {/* Content */}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📝 Notes App - Full Stack Application
 
 Modern, full-stack note-sharing application built with **Go (Fiber)** backend and **Next.js (TypeScript)** frontend. Share your thoughts, ideas, and stories with the world!
@@ -64,10 +65,67 @@ Modern, full-stack note-sharing application built with **Go (Fiber)** backend an
 - **Version Control**: Git
 - **CI/CD**: Railway (Backend), Vercel (Frontend)
 - **Database Hosting**: Railway PostgreSQL
+=======
+# NotesApp Frontend
+
+Modern, responsive note-sharing application built with Next.js, TypeScript, and Tailwind CSS.
+
+## 🚀 Features
+
+- **Authentication**: Register and login with JWT tokens
+- **CRUD Notes**: Create, read, update, and delete notes
+- **Image Upload**: Upload images with notes (stored as base64)
+- **Search & Filter**: Search notes by title, content, or username
+- **Responsive Design**: Beautiful UI that works on all devices
+- **Real-time Toast Notifications**: User-friendly feedback
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Backend API running (from your backend folder)
+
+## 🛠️ Installation
+
+1. **Clone or create the project structure:**
+
+```bash
+mkdir notes-frontend
+cd notes-frontend
+```
+
+2. **Install dependencies:**
+
+```bash
+npm install
+```
+
+3. **Create environment file:**
+
+Copy `.env.local.example` to `.env.local` and update:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Edit `.env.local`:
+```
+NEXT_PUBLIC_API_URL=https://your-backend-url.up.railway.app
+```
+
+4. **Run development server:**
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+>>>>>>> 4f44d85 (Font : FrontEnd)
 
 ## 📁 Project Structure
 
 ```
+<<<<<<< HEAD
 notes-app/
 ├── backend/                    # Go Backend API
 │   ├── cmd/
@@ -203,6 +261,59 @@ go fmt ./...
 cd frontend
 
 # Development server
+=======
+frontend-app/
+├── pages/
+│   ├── _app.tsx              # App wrapper with providers
+│   ├── index.tsx             # Homepage
+│   ├── login.tsx             # Login page
+│   ├── register.tsx          # Registration page
+│   └── notes/
+│       ├── index.tsx         # All notes listing
+│       ├── create.tsx        # Create note form
+│       └── [id].tsx          # Note detail page
+├── components/
+│   ├── Navbar.tsx            # Navigation bar
+│   ├── NoteCard.tsx          # Note card component
+│   └── UploadPhoto.tsx       # Image upload component
+├── contexts/
+│   └── AuthContext.tsx       # Authentication context
+├── lib/
+│   └── api.ts                # API client & functions
+├── styles/
+│   └── globals.css           # Global styles
+├── public/                   # Static assets
+├── tailwind.config.js        # Tailwind configuration
+├── postcss.config.js         # PostCSS configuration
+├── tsconfig.json             # TypeScript configuration
+├── next.config.js            # Next.js configuration
+└── package.json              # Dependencies
+```
+
+## 🎨 Key Components
+
+### Authentication
+- JWT token storage in localStorage
+- Auto-redirect on unauthorized access
+- Protected routes with AuthContext
+
+### Note Management
+- Create notes with title, content, and optional image
+- View all notes or filter by "My Notes"
+- Search functionality
+- Delete own notes
+
+### Image Handling
+- Upload images up to 5MB
+- Supported formats: JPG, PNG, GIF, WEBP
+- Base64 encoding for Railway compatibility
+- Preview before upload
+
+## 🔧 Available Scripts
+
+```bash
+# Development
+>>>>>>> 4f44d85 (Font : FrontEnd)
 npm run dev
 
 # Build for production
@@ -211,12 +322,17 @@ npm run build
 # Start production server
 npm run start
 
+<<<<<<< HEAD
 # Lint
+=======
+# Lint code
+>>>>>>> 4f44d85 (Font : FrontEnd)
 npm run lint
 ```
 
 ## 🚀 Deployment
 
+<<<<<<< HEAD
 ### Backend (Railway)
 
 1. Install Railway CLI: `npm i -g @railway/cli`
@@ -288,10 +404,61 @@ Full API documentation: [Backend README](./backend/README.md)
 
 ### Logs
 - `id`, `method`, `endpoint`, `request`, `response`, `status_code`, `created_at`
+=======
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+
+2. Import project in Vercel:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your repository
+
+3. Add environment variable:
+   ```
+   NEXT_PUBLIC_API_URL=https://your-backend-url.up.railway.app
+   ```
+
+4. Deploy!
+
+### Deploy to Netlify
+
+1. Build the project:
+   ```bash
+   npm run build
+   ```
+
+2. Deploy the `.next` folder to Netlify
+
+3. Set environment variables in Netlify dashboard
+
+## 🔐 Environment Variables
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `NEXT_PUBLIC_API_URL` | Backend API URL | `https://api.example.com` |
+
+## 📱 Responsive Breakpoints
+
+- Mobile: < 768px
+- Tablet: 768px - 1024px
+- Desktop: > 1024px
+
+## 🎨 Design Features
+
+- Modern gradient backgrounds
+- Smooth transitions and animations
+- Card-based layout
+- Consistent color scheme (Primary blue)
+- Hover effects and interactions
+- Loading states
+- Empty states
+>>>>>>> 4f44d85 (Font : FrontEnd)
 
 ## 🐛 Troubleshooting
 
 ### CORS Issues
+<<<<<<< HEAD
 Update `ALLOWED_ORIGINS` di backend environment variables dengan frontend URL Anda.
 
 ### Authentication Failed
@@ -398,3 +565,53 @@ If you have any questions or issues, please:
 **⭐ If you like this project, please give it a star!**
 
 Made with 💙 using Go, Next.js, TypeScript, and PostgreSQL
+=======
+Make sure your backend has correct CORS settings:
+```go
+AllowOrigins: "http://localhost:3000,https://your-frontend-url.vercel.app"
+```
+
+### Images Not Displaying
+- Check if images are properly uploaded
+- Verify base64 format is correct
+- Check browser console for errors
+
+### Authentication Issues
+- Clear localStorage and try again
+- Check if JWT_SECRET matches between frontend and backend
+- Verify token is being sent in Authorization header
+
+## 📝 API Endpoints Used
+
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - Login user
+- `GET /notes` - Get all notes
+- `GET /notes/:id` - Get single note
+- `POST /notes` - Create note (protected)
+- `PATCH /notes/:id` - Update note (protected)
+- `DELETE /notes/:id` - Delete note (protected)
+- `POST /upload/image` - Upload image (protected)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 📄 License
+
+MIT License - feel free to use this project for learning or production!
+
+## 👨‍💻 Author
+
+Built with ❤️ using Next.js, TypeScript, and Tailwind CSS
+
+## 🙏 Acknowledgments
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [React Hot Toast](https://react-hot-toast.com/)
+- [Axios](https://axios-http.com/)
+>>>>>>> 4f44d85 (Font : FrontEnd)
