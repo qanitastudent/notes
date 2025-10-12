@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: notes_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: notesdb
+    ports:
+    - "5434:5432" # ubah host port jadi 5433
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d
+volumes:
+  db_data:
+
+
+# PostgreSQL versi 15.
+
+# Username/password default postgres:postgres.
+
+# Database notesdb otomatis dibuat.
+
+# Folder ./backend/migrations/ akan dijalankan otomatis saat pertama kali container dibuat (karena kita mount ke /docker-entrypoint-initdb.d).
+
+# Volume db_data menyimpan data agar tidak hilang meskipun container dihapus.
