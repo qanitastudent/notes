@@ -37,8 +37,6 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-
-
 	// Middleware untuk mendukung proxy Railway dan redirect HTTPS
 	app.Use(func(c *fiber.Ctx) error {
 		proto := c.Get("X-Forwarded-Proto")
