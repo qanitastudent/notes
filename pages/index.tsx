@@ -47,7 +47,7 @@ export default function Home() {
               Welcome to NotesApp
             </h1>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Share your thoughts, ideas, and stories with the world. Create beautiful notes with images and markdown support.
+              hare your thoughts, ideas, and stories with the world. Create beautiful notes with images and markdown support.
             </p>
             {!isAuthenticated && (
               <div className="flex justify-center space-x-4">
