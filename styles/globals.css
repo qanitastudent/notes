@@ -38,7 +38,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #691111;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -53,4 +53,9 @@ body {
 /* Smooth transitions */
 * {
   transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+/* text input */
+input {
+  color: rgb(0, 0, 0); /* selalu hitam */
 }

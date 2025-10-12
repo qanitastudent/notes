@@ -194,15 +194,15 @@ export default function CreateNotePage() {
           <ul className="space-y-2 text-primary-800">
             <li className="flex items-start">
               <span className="mr-2">•</span>
-              <span>Use a descriptive title that captures the main idea</span>
+              <span>Apa judul catatanmu kali ini?</span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
-              <span>Break up long text with paragraphs for better readability</span>
+              <span>Tambahkan Deskripsi</span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
-              <span>Add an image to make your note more engaging</span>
+              <span>Tambahkan Foto</span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>

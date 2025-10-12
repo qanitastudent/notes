@@ -15,7 +15,7 @@ export default function Navbar() {
               <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">N</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">NotesApp</span>
+              <span className="text-xl font-bold text-gray-900">NoteApp</span>
             </Link>
           </div>
 
@@ -30,13 +30,13 @@ export default function Navbar() {
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  My Notes
+                  Catatanku
                 </Link>
                 <Link
                   href="/notes/create"
                   className="px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition"
                 >
-                  Create Note
+                  Buat Catatan
                 </Link>
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center space-x-2 px-3 py-2 bg-gray-100 rounded-lg">
