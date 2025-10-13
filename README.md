@@ -140,8 +140,7 @@ notes-app/
 │   ├── go.mod
 │   └── README.md              # Backend documentation
 │
-├── frontend/                   # Next.js Frontend
-│   ├── pages/                 # Next.js pages
+y│   ├── pages/                 # Next.js pages
 │   │   ├── index.tsx          # Homepage
 │   │   ├── login.tsx          # Login page
 │   │   ├── register.tsx       # Register page
