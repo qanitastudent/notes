@@ -65,7 +65,7 @@ export default function UploadPhoto({ onUploadComplete, currentImage }: UploadPh
       <label className="block text-sm font-medium text-gray-700">
         Image (Optional)
       </label>
-      
+
       {preview ? (
         <div className="relative">
           <div className="relative rounded-lg overflow-hidden border-2 border-gray-200">

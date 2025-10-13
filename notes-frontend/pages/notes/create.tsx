@@ -84,8 +84,8 @@ export default function CreateNotePage() {
             </svg>
             Back
           </button>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Create New Note</h1>
-          <p className="text-gray-600">Share your thoughts and ideas with the community</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Buat Catatan Baru</h1>
+          <p className="text-gray-600">Bagikan pemikiran dan ide Anda dengan komunitas.</p>
         </div>
 
         {/* Form */}
@@ -120,7 +120,7 @@ export default function CreateNotePage() {
                 rows={12}
                 value={formData.content}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition resize-none text-black placeholder-gray-400"
                 placeholder="Write your note content here..."
               />
               <p className="mt-2 text-sm text-gray-500">
@@ -191,22 +191,22 @@ export default function CreateNotePage() {
         {/* Tips */}
         <div className="mt-8 bg-primary-50 rounded-xl p-6">
           <h3 className="text-lg font-semibold text-primary-900 mb-3">💡 Tips for great notes:</h3>
-          <ul className="space-y-2 text-primary-800">
+          <ul className="space-y-2 text-primary-900">
             <li className="flex items-start">
               <span className="mr-2">•</span>
               <span>Apa judul catatanmu kali ini?</span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
-              <span>Tambahkan Deskripsi</span>
+              <span>Tambahkan Deskripsi, untuk menjelaskannya.</span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
-              <span>Tambahkan Foto</span>
+              <span>Tambahkan foto pencapaianmu.</span>
             </li>
             <li className="flex items-start">
               <span className="mr-2">•</span>
-              <span>Keep your content clear and concise</span>
+              <span>Buat catatan secara konsisten dan bagikan untuk menjadi manfaat.</span>
             </li>
           </ul>
         </div>

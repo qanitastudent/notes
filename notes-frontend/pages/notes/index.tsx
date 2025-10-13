@@ -83,8 +83,8 @@ export default function NotesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">All Notes</h1>
-          <p className="text-gray-600">Discover and explore shared notes from the community</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Semua Catatan</h1>
+          <p className="text-gray-600">Temukan dan jelajahi catatan bersama dari komunitas.</p>
         </div>
 
         {/* Filters and Search */}
@@ -128,7 +128,7 @@ export default function NotesPage() {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    All Notes
+                    Semua Catatan
                   </button>
                   <button
                     onClick={() => setFilter('my')}
@@ -138,7 +138,7 @@ export default function NotesPage() {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    My Notes
+                    Catatanku
                   </button>
                 </>
               )}

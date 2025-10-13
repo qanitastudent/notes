@@ -30,7 +30,7 @@ export default function Navbar() {
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  Catatanku
+                  Daftar Catatan
                 </Link>
                 <Link
                   href="/notes/create"
