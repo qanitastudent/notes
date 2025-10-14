@@ -58,7 +58,7 @@ export default function Login() {
             </div>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="text-gray-600 mt-2">Sign in to continue to NotesApp</p>
+          <p className="text-gray-600 mt-2">Sign in to continue to Q-VerseNotes</p>
         </div>
 
         {/* Form */}

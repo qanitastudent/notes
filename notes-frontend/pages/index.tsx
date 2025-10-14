@@ -47,7 +47,7 @@ export default function Home() {
               Welcome to NotesApp
             </h1>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              hare your thoughts, ideas, and stories with the world. Create beautiful notes with images and markdown support.
+              Bagikan pemikiran, ide, dan cerita Anda dengan dunia. Buat catatan indah dengan dukungan gambar dan markdown.
             </p>
             {!isAuthenticated && (
               <div className="flex justify-center space-x-4">
@@ -143,16 +143,16 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Ready to Share Your Ideas?
+                Siap Membagikan Idemu?
               </h2>
               <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                Join our community and start creating amazing notes today. It's free and takes less than a minute!
+                Bergabunglah dengan komunitas kami dan mulailah membuat catatan yang luar biasa hari ini. Gratis dan hanya membutuhkan waktu kurang dari satu menit!
               </p>
               <Link
                 href="/register"
                 className="inline-block px-8 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors text-lg"
               >
-                Sign Up Now
+                Daftar Sekarang
               </Link>
             </div>
           </div>

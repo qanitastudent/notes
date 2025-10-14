@@ -13,9 +13,9 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">N</span>
+                <span className="text-white font-bold text-xl">Q</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">NoteApp</span>
+              <span className="text-xl font-bold text-gray-900">VerseNotes</span>
             </Link>
           </div>
 
@@ -63,13 +63,13 @@ export default function Navbar() {
                   href="/login"
                   className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition"
                 >
-                  Login
+                  Masuk
                 </Link>
                 <Link
                   href="/register"
                   className="px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition"
                 >
-                  Register
+                  Daftar
                 </Link>
               </>
             )}

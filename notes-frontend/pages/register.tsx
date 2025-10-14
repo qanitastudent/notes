@@ -82,7 +82,7 @@ export default function Register() {
             </div>
           </Link>
           <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
-          <p className="text-gray-600 mt-2">Join NotesApp and start sharing</p>
+          <p className="text-gray-600 mt-2">Join Q-VerseNotes and start sharing</p>
         </div>
 
         {/* Form */}
