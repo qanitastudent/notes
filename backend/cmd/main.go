@@ -70,6 +70,12 @@ func main() {
 	upload.Post("/image", utils.JWTProtected(), handlers.UploadImage)
 	upload.Delete("/image", utils.JWTProtected(), handlers.DeleteImage)
 
+	// ===== Logs routes =====
+	logs := app.Group("/logs")
+	logs.Get("/", utils.JWTProtected(), handlers.GetLogs)
+	logs.Get("/stats", utils.JWTProtected(), handlers.GetLogStats)
+	logs.Delete("/clear", utils.JWTProtected(), handlers.ClearLogs)
+
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status":  "ok",
