@@ -1,36 +1,40 @@
--- users table
+-- ===============================
+-- USERS TABLE
+-- ===============================
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
+    password TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- notes table
+-- ===============================
+-- NOTES TABLE
+-- Setiap catatan dimiliki oleh user tertentu
+-- ===============================
 CREATE TABLE IF NOT EXISTS notes (
-    d SERIAL PRIMARY KEY,
-    ser_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    itle TEXT NOT NULL,
-    ontent TEXT,
-    mage_url TEXT,
-    reated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    content TEXT,
+    image_url TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
--- logs table
+-- ===============================
+-- LOGS TABLE
+-- Menyimpan aktivitas request/response untuk audit dan debugging
+-- ===============================
 CREATE TABLE IF NOT EXISTS logs (
     id SERIAL PRIMARY KEY,
-    occurred_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     method VARCHAR(10),
     endpoint TEXT,
-    headers JSONB,
-    payload JSONB,
-    response_body JSONB,
-    response_status INTEGER
+    request TEXT,
+    response TEXT,
+    status_code INTEGER,
+    ip VARCHAR(100),
+    user_agent TEXT,
+    duration TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
-
--- users: menyimpan akun user dengan password_hash (untuk bcrypt).
-
--- notes: setiap catatan terhubung ke users.id.
-
--- logs: untuk mencatat request/response dari backend nanti.
