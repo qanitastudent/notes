@@ -3,12 +3,13 @@ package models
 import "time"
 
 type Log struct {
-    ID        uint      `gorm:"primaryKey" json:"id"`
-    Method    string    `json:"method"`
-    Path      string    `json:"path"`
-    Status    int       `json:"status"`
-    IP        string    `json:"ip"`
-    UserAgent string    `json:"user_agent"`
-    Duration  string    `json:"duration"`
-    CreatedAt time.Time `json:"created_at"`
+	ID         uint      `gorm:"primaryKey" json:"id"`
+	Method     string    `json:"method"`
+	Endpoint   string    `json:"endpoint"`
+	Request    string    `json:"request"`
+	Response   string    `json:"response"`
+	StatusCode int       `json:"status_code"`
+	IP         string    `json:"ip"`
+	UserAgent  string    `json:"user_agent"`
+	CreatedAt  time.Time `json:"created_at"`
 }

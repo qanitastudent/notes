@@ -1,39 +1,64 @@
 package handlers
 
 import (
-    "log"
-    "time"
+	"log"
+	"time"
 
-    "github.com/gofiber/fiber/v2"
-    "notes-app/internal/database"
-    "notes-app/internal/models"
+	"github.com/gofiber/fiber/v2"
+	"notes-app/internal/database"
+	"notes-app/internal/models"
 )
 
-// LoggingMiddleware mencatat setiap request ke tabel logs
+// Limit string length to avoid heavy DB storage
+func limitString(s string, max int) string {
+	if len(s) > max {
+		return s[:max] + "...(truncated)"
+	}
+	return s
+}
+
 func LoggingMiddleware() fiber.Handler {
-    return func(c *fiber.Ctx) error {
-        start := time.Now()
+	return func(c *fiber.Ctx) error {
+		start := time.Now()
 
-        // Jalankan request
-        err := c.Next()
+		// ====== Capture request body ======
+		reqBody := ""
+		if c.Request().Body() != nil {
+			reqBody = string(c.Request().Body())
+			reqBody = limitString(reqBody, 500)
+		}
 
-        duration := time.Since(start)
+		// ====== Jalankan handler utama ======
+		err := c.Next()
 
-        // Simpan log ke database
-        logEntry := models.Log{
-            Method:    c.Method(),
-            Path:      c.Path(),
-            Status:    c.Response().StatusCode(),
-            IP:        c.IP(),
-            UserAgent: string(c.Request().Header.UserAgent()),
-            Duration:  duration.String(),
-            CreatedAt: time.Now(),
-        }
+		duration := time.Since(start)
+		statusCode := c.Response().StatusCode()
+		method := c.Method()
+		path := c.OriginalURL()
+		ip := c.IP()
+		userAgent := c.Get("User-Agent")
 
-        if dbErr := database.DB.Create(&logEntry).Error; dbErr != nil {
-            log.Printf("❌ Failed to save log: %v", dbErr)
-        }
+		// ====== Capture response body setelah Next() ======
+		respBody := string(c.Response().Body())
+		response := limitString(respBody, 500)
 
-        return err
-    }
+		// ====== Simpan ke database ======
+		logEntry := models.Log{
+			Method:     method,
+			Endpoint:   path,
+			Request:    reqBody,
+			Response:   response,
+			StatusCode: statusCode,
+			IP:         ip,
+			UserAgent:  userAgent,
+			CreatedAt:  time.Now(),
+		}
+
+		if err := database.DB.Create(&logEntry).Error; err != nil {
+			log.Printf("⚠️ Failed to save log: %v", err)
+		}
+
+		log.Printf("[%s] %s %s → %d (%v)", ip, method, path, statusCode, duration)
+		return err
+	}
 }
