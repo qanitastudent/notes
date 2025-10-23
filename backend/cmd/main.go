@@ -54,8 +54,10 @@ func main() {
 	})
 
 	// ===== Routes =====
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Notes Sharing API is running 🚀")
+	app.Get("/debug/env", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"DATABASE_URL": os.Getenv("DATABASE_URL"),
+		})
 	})
 
 	auth := app.Group("/auth")
