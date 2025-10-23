@@ -6,6 +6,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var DB *gorm.DB
@@ -13,11 +14,13 @@ var DB *gorm.DB
 func ConnectDB() {
 	var dsn string
 
-	// Railway biasanya pakai DATABASE_URL langsung
 	if os.Getenv("DATABASE_URL") != "" {
-		dsn = os.Getenv("DATABASE_URL")
+		// Railway format: postgresql://...
+		url := os.Getenv("DATABASE_URL")
+		// Pastikan gunakan sslmode=require untuk production
+		dsn = url + "?sslmode=require"
 	} else {
-		// fallback untuk lokal
+		// Lokal fallback
 		dsn = "host=" + os.Getenv("DB_HOST") +
 			" user=" + os.Getenv("DB_USER") +
 			" password=" + os.Getenv("DB_PASSWORD") +
@@ -26,10 +29,13 @@ func ConnectDB() {
 			" sslmode=disable"
 	}
 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		log.Fatalf("❌ Failed to connect database: %v", err)
 	}
+
 	DB = db
-	log.Println("✅ Database connected")
+	log.Println("✅ Database connected to:", os.Getenv("DATABASE_URL"))
 }
