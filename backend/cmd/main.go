@@ -22,8 +22,10 @@ func main() {
 
 	// Menghubungkan ke database PostgreSQL melalui
 	database.ConnectDB()
-	// Menjalankan migrasi otomatis
-	database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{})
+	// Menjalankan migrasi otomatis dengan penanganan error
+	if err := database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{}); err != nil {
+		log.Println("⚠️ AutoMigrate error:", err)
+	}
 
 	app := fiber.New()
 
