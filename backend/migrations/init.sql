@@ -3,15 +3,14 @@
 -- ===============================
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY, 
-    username VARCHAR(100) UNIQUE NOT NULL,  --dibuat unik, sehingga tidak ada duplikasi akun.
-    email VARCHAR(255) UNIQUE NOT NULL,     --dibuat unik, sehingga tidak ada duplikasi akun.
-    password TEXT NOT NULL,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,  -- 👈 Ubah dari 'password' ke 'password_hash'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 
 -- ===============================
 -- NOTES TABLE
--- Setiap catatan dimiliki oleh user tertentu
 -- ===============================
 CREATE TABLE IF NOT EXISTS notes (
     id SERIAL PRIMARY KEY,
@@ -19,12 +18,13 @@ CREATE TABLE IF NOT EXISTS notes (
     title TEXT NOT NULL,
     content TEXT,
     image_url TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+    username VARCHAR(100) NOT NULL,  -- 👈 Tambahkan field ini
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()  -- 👈 Tambahkan field ini
 );
 
 -- ===============================
 -- LOGS TABLE
--- Menyimpan aktivitas request/response untuk audit dan debugging
 -- ===============================
 CREATE TABLE IF NOT EXISTS logs (
     id SERIAL PRIMARY KEY,
@@ -33,8 +33,7 @@ CREATE TABLE IF NOT EXISTS logs (
     request TEXT,
     response TEXT,
     status_code INTEGER,
-    ip VARCHAR(100),
-    user_agent TEXT,
-    duration TEXT,
+    ip VARCHAR(100),        -- 👈 Tambahkan field ini
+    user_agent TEXT,        -- 👈 Tambahkan field ini
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
