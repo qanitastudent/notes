@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Log struct {
-	ID         uint      `gorm:"primaryKey" json:"id"`
+	ID         uint64    `gorm:"primaryKey" json:"id"`
 	Method     string    `json:"method"`
 	Endpoint   string    `json:"endpoint"`
 	Request    string    `json:"request"`

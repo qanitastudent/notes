@@ -54,8 +54,9 @@ func LoggingMiddleware() fiber.Handler {
 			CreatedAt:  time.Now(),
 		}
 
+
 		if err := database.DB.Create(&logEntry).Error; err != nil {
-			log.Printf("⚠️ Failed to save log: %v", err)
+			log.Printf("⚠️ Failed to save log: %v | logEntry: %+v", err, logEntry)
 		}
 
 		log.Printf("[%s] %s %s → %d (%v)", ip, method, path, statusCode, duration)
