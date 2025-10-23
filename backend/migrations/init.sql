@@ -2,9 +2,9 @@
 -- USERS TABLE
 -- ===============================
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(100) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    id SERIAL PRIMARY KEY, 
+    username VARCHAR(100) UNIQUE NOT NULL,  --dibuat unik, sehingga tidak ada duplikasi akun.
+    email VARCHAR(255) UNIQUE NOT NULL,     --dibuat unik, sehingga tidak ada duplikasi akun.
     password TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );

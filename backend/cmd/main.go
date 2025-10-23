@@ -15,18 +15,19 @@ import (
 )
 
 func main() {
-	// Load environment variables
+	// Memuat variabel lingkungan (.env)
 	if err := godotenv.Load(); err != nil {
 		log.Println("⚠️ No .env file found, using system environment")
 	}
 
-	// Connect to database
+	// Menghubungkan ke database PostgreSQL melalui
 	database.ConnectDB()
+	// Menjalankan migrasi otomatis
 	database.DB.AutoMigrate(&models.User{}, &models.Note{}, &models.Log{})
 
 	app := fiber.New()
 
-	// Logging middleware
+	// untuk mencatat setiap request ke tabel logsk
 	app.Use(handlers.LoggingMiddleware())
 
 	// ===== CORS Configuration =====
